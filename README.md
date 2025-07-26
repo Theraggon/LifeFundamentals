@@ -1,38 +1,104 @@
-# sv
+# LifeFundamentals
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A SvelteKit application with TypeScript, TailwindCSS, and internationalization support.
 
-## Creating a project
+## Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Framework**: SvelteKit 2.x with Svelte 5
+- **Language**: TypeScript
+- **Styling**: TailwindCSS 4.x
+- **Database**: PostgreSQL with Drizzle ORM
+- **i18n**: Paraglide JS (English/Czech)
+- **Testing**: Vitest + Playwright
+- **Package Manager**: Bun
+
+## Getting Started
+
+Install dependencies:
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+bun install
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Set up environment variables (copy `.env.example` to `.env` and configure):
 
 ```sh
-npm run dev
+DATABASE_URL=your_postgresql_connection_string
+```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+## Development
+
+Start the development server:
+
+```sh
+bun run dev
+
+# or open in browser automatically
+bun run dev -- --open
 ```
 
 ## Building
 
-To create a production version of your app:
+Create a production build:
 
 ```sh
-npm run build
+bun run build
 ```
 
-You can preview the production build with `npm run preview`.
+Preview the production build:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```sh
+bun run preview
+```
+
+## Available Scripts
+
+**Development**
+- `bun run dev` - Start development server
+- `bun run dev -- --open` - Start dev server and open browser
+
+**Build & Deploy**
+- `bun run build` - Create production build
+- `bun run preview` - Preview production build
+
+**Code Quality**
+- `bun run lint` - Run prettier check and eslint
+- `bun run format` - Format code with prettier
+- `bun run check` - Run svelte-check with TypeScript validation
+- `bun run check:watch` - Run svelte-check in watch mode
+
+**Testing**
+- `bun run test` - Run all tests (unit + e2e)
+- `bun run test:unit` - Run Vitest unit tests
+- `bun run test:e2e` - Run Playwright e2e tests
+
+**Database**
+- `bun run db:push` - Push schema changes to database
+- `bun run db:migrate` - Run database migrations
+- `bun run db:studio` - Open Drizzle Studio
+
+**Storybook**
+- `bun run storybook` - Start Storybook dev server
+- `bun run build-storybook` - Build Storybook
+
+## Features
+
+- 🌐 Internationalization with Paraglide JS (English/Czech)
+- 🗄️ PostgreSQL database with Drizzle ORM
+- 🎨 TailwindCSS with forms and typography plugins
+- 📚 Storybook for component development
+- ✅ Comprehensive testing setup (Vitest + Playwright)
+- 🔍 ESLint + Prettier for code quality
+- 📱 Responsive design ready
+
+## Project Structure
+
+- `src/lib/server/` - Server-side utilities and database code
+- `src/routes/` - SvelteKit routes and pages
+- `src/stories/` - Storybook stories
+- `messages/` - i18n message files
+- `e2e/` - Playwright e2e tests
+
+## Demo Routes
+
+- `/demo/paraglide` - i18n demonstration with language switching
