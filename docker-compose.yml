@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:password@db:5432/life-fundamentals
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: bun run dev --host
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: life-fundamentals
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
