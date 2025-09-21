@@ -31,3 +31,4 @@ storybook-static
 
 # JetBrains IDEs
 /.idea
+.env*.local

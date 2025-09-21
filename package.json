@@ -66,6 +66,7 @@
 		"@neondatabase/serverless": "^0.10.4",
 		"@sveltejs/adapter-auto": "^6.0.1",
 		"drizzle-orm": "^0.44.4",
-		"postgres": "^3.4.7"
+		"postgres": "^3.4.7",
+		"dotenv": "^17.2.2"
 	}
 }

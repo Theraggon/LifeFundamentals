@@ -105,7 +105,6 @@
 					disabled={isCreating}
 				/>
 			</div>
-			sadasds
 			<button
 				on:click={createTag}
 				disabled={isCreating || !newTagName.trim()}
