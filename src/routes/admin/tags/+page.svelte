@@ -83,8 +83,8 @@
 	<title>Manage Tags - LifeFundamentals Admin</title>
 </svelte:head>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="text-3xl font-bold mb-8">Manage Tags tes sad a</h1>
+<div class="container mx-auto px-4 py-8"> 
+	<h1 class="text-3xl font-bold mb-8">Manage Tags</h1>
 
 	<!-- Create new tag form -->
 	<div class="bg-white rounded-lg shadow-md p-6 mb-8">
