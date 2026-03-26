@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { tags } from '$lib/server/db/schema';
+import { isPostgresUniqueViolation } from '$lib/server/pg-errors';
 import { eq } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
 
@@ -24,18 +25,21 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'Tag name is required' }, { status: 400 });
 		}
 
-		// Create slug from name (lowercase, replace spaces with hyphens)
-		const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-		
+		const trimmed = name.trim();
+		const slug = trimmed
+			.toLowerCase()
+			.replace(/\s+/g, '-')
+			.replace(/[^a-z0-9-]/g, '');
+
 		const newTag = await db.insert(tags).values({
-			name: name.trim(),
+			name: trimmed,
 			slug
 		}).returning();
 
 		return json(newTag[0], { status: 201 });
 	} catch (error) {
 		console.error('Error creating tag:', error);
-		if (error instanceof Error && 'code' in error && error.code === '23505') { // Unique constraint violation
+		if (isPostgresUniqueViolation(error)) {
 			return json({ error: 'A tag with this name or slug already exists' }, { status: 409 });
 		}
 		return json({ error: 'Failed to create tag' }, { status: 500 });
@@ -51,7 +55,12 @@ export const DELETE: RequestHandler = async ({ request, url }) => {
 			return json({ error: 'Tag ID is required' }, { status: 400 });
 		}
 
-		const deletedTag = await db.delete(tags).where(eq(tags.id, parseInt(id))).returning();
+		const idNum = parseInt(id, 10);
+		if (!Number.isInteger(idNum)) {
+			return json({ error: 'Tag not found' }, { status: 404 });
+		}
+
+		const deletedTag = await db.delete(tags).where(eq(tags.id, idNum)).returning();
 		
 		if (deletedTag.length === 0) {
 			return json({ error: 'Tag not found' }, { status: 404 });
